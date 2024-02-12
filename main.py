@@ -68,7 +68,18 @@ def message(msg,color):
   mesg = font_style.render(msg, True, color)
   dis.blit(mesg, [dis_width/ 6, dis_height/ 3])
 
+def paused():
+  paused = True
+  largeText = pygame.font.SysFont("comicsansms",115)
+  TextSurf, TextRect = text_objects("Paused", largeText)
+  TextRect.center = ((dis_width/2),(dis_height/2))
+  dis.blit(TextSurf, TextRect)
 
+  while paused:
+    for event in pygame.event.get():
+      if event.type == pygame.QUIT:
+        pygame.quit()
+        quit()
 
     button("Continue",150,450,100,50,green,bright_green,unpause)
     button("Quit",350,450,100,50,red,bright_red,quitgame)
@@ -133,8 +144,6 @@ def gameloop():
     for event in pygame.event.get():
       if event.type==pygame.QUIT:
         game_over=True
-      if paused == True:
-        time.sleep(1)
       if event.type==pygame.KEYDOWN:
         if event.key==pygame.K_LEFT:
           x1_change = -snake_block
@@ -149,6 +158,7 @@ def gameloop():
           y1_change = snake_block
           x1_change = 0
         if event.key==pygame.K_p:
+          print("a")
           paused = True
         if event.key==pygame.K_u:
           paused = False
